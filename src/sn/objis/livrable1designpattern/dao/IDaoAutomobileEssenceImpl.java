@@ -3,6 +3,7 @@
  */
 package sn.objis.livrable1designpattern.dao;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Blob;
 
 import sn.objis.livrable1designpattern.domaine.AutomobileEssence;
 
@@ -35,7 +35,7 @@ public class IDaoAutomobileEssenceImpl implements IDaoAutomobileEssence {
 	public void create(AutomobileEssence t) {
 		try {
 			// Préparation de la requète
-			String sql = "INSERT INTO automobile (categorie, marque, modele, annee, photo, couleur, puissance, type) VALUES (?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO automobile (categorie, marque, modele, annee, photo, couleur, prix, puissance, carburant, description) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 			// Création d'une zone de requète
 			PreparedStatement pst = cnx.prepareStatement(sql);
@@ -47,8 +47,10 @@ public class IDaoAutomobileEssenceImpl implements IDaoAutomobileEssence {
 			pst.setInt(4, t.getAnnee());
 			pst.setBlob(5, t.getPhoto());
 			pst.setString(6, t.getCouleur());
-			pst.setInt(7, t.getPuissance());
-			pst.setString(8, t.getType());
+			pst.setInt(7, t.getPrix());
+			pst.setInt(8, t.getPuissance());
+			pst.setString(9, t.getCarburant());
+			pst.setString(10, t.getDescription());
 
 			// Exécution de la requète
 			pst.executeUpdate();
@@ -85,12 +87,15 @@ public class IDaoAutomobileEssenceImpl implements IDaoAutomobileEssence {
 				String marque = rs.getString("marque");
 				String modele = rs.getString("modele");
 				int annee = Integer.parseInt(rs.getString("annee"));
-				Blob photo = (Blob) rs.getBlob("photo");
+				InputStream photo = (InputStream) rs.getBlob("photo");
 				String couleur = rs.getString("couleur");
+				int prix = Integer.parseInt(rs.getString("prix"));
 				int puissance = Integer.parseInt(rs.getString("puissance"));
-				String type = rs.getString("type");
+				String carburant = rs.getString("carburant");
+				String description = rs.getString("description");
 
-				auto = new AutomobileEssence(categorie, marque, modele, annee, photo, couleur, puissance, type);
+				auto = new AutomobileEssence(categorie, marque, modele, annee, photo, couleur, prix, puissance,
+						carburant, description);
 				listeAuto.add(auto);
 			}
 		} catch (SQLException e) {

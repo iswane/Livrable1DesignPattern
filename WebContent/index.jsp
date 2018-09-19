@@ -185,6 +185,7 @@
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
 					<li class="active"><a href="#">Accueil</a></li>
+					<li><a href="http://localhost:8181/Livrable1DesignPattern/addProduct">Admin</a></li>
 					<li><a href="#">Categories</a></li>
 					<li><a href="#">Voitures neuves</a></li>
 					<li><a href="#">Voitures d'occasions</a></li>

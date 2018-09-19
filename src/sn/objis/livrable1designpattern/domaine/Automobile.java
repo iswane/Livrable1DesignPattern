@@ -3,7 +3,7 @@
  */
 package sn.objis.livrable1designpattern.domaine;
 
-import java.sql.Blob;
+import java.io.InputStream;
 
 /**
  * @author OBJIS #10000codeurs
@@ -16,18 +16,20 @@ public abstract class Automobile {
 	private String marque;
 	private String modele;
 	private int annee;
-	private Blob photo;
+	private InputStream photo;
 	private String couleur;
+	private int prix;
 	private int puissance;
-	private String type;
+	private String carburant;
+	private String description;
 
 	// Constructeurs
 	public Automobile() {
 		super();
 	}
 
-	public Automobile(String categorie, String marque, String modele, int annee, Blob photo, String couleur,
-			int puissance, String type) {
+	public Automobile(String categorie, String marque, String modele, int annee, InputStream photo, String couleur, int prix,
+			int puissance, String carburant, String description) {
 		super();
 		this.categorie = categorie;
 		this.marque = marque;
@@ -35,8 +37,10 @@ public abstract class Automobile {
 		this.annee = annee;
 		this.photo = photo;
 		this.couleur = couleur;
+		this.prix = prix;
 		this.puissance = puissance;
-		this.type = type;
+		this.carburant = carburant;
+		this.description = description;
 	}
 
 	// méthodes
@@ -67,11 +71,11 @@ public abstract class Automobile {
 		this.modele = modele;
 	}
 
-	public Blob getPhoto() {
+	public InputStream getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(Blob photo) {
+	public void setPhoto(InputStream photo) {
 		this.photo = photo;
 	}
 
@@ -99,12 +103,28 @@ public abstract class Automobile {
 		this.annee = annee;
 	}
 
-	public String getType() {
-		return type;
+	public String getCarburant() {
+		return carburant;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setCarburant(String carburant) {
+		this.carburant = carburant;
+	}
+
+	public int getPrix() {
+		return prix;
+	}
+
+	public void setPrix(int prix) {
+		this.prix = prix;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

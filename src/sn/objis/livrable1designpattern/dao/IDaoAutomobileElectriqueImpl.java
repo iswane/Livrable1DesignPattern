@@ -3,6 +3,12 @@
  */
 package sn.objis.livrable1designpattern.dao;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +17,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Blob;
+import javax.imageio.ImageIO;
 
+import javafx.scene.image.Image;
 import sn.objis.livrable1designpattern.domaine.AutomobileElectricite;
 
 /**
@@ -33,9 +40,11 @@ public class IDaoAutomobileElectriqueImpl implements IDaoAutomobileElectrique {
 
 	@Override
 	public void create(AutomobileElectricite t) {
+//		File monImage = new File(location);
+//		FileInputStream istreamImage = new FileInputStream(monImage);
 		try {
 			// Préparation de la requète
-			String sql = "INSERT INTO automobile (categorie, marque, modele, annee, photo, couleur, puissance, type) VALUES (?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO automobile (categorie, marque, modele, annee, photo, couleur, prix, puissance, type, description) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 			// Création d'une zone de requète
 			PreparedStatement pst = cnx.prepareStatement(sql);
@@ -47,8 +56,10 @@ public class IDaoAutomobileElectriqueImpl implements IDaoAutomobileElectrique {
 			pst.setInt(4, t.getAnnee());
 			pst.setBlob(5, t.getPhoto());
 			pst.setString(6, t.getCouleur());
-			pst.setInt(7, t.getPuissance());
-			pst.setString(8, t.getType());
+			pst.setInt(7, t.getPrix());
+			pst.setInt(8, t.getPuissance());
+			pst.setString(9, t.getCarburant());
+			pst.setString(10, t.getDescription());
 
 			// Exécution de la requète
 			pst.executeUpdate();
@@ -78,19 +89,22 @@ public class IDaoAutomobileElectriqueImpl implements IDaoAutomobileElectrique {
 
 			// Exécution de la requête
 			ResultSet rs = st.executeQuery(sql);
-
+			
 			// Traitement des données du resultat de la requête
 			while (rs.next()) {
 				String categorie = rs.getString("categorie");
 				String marque = rs.getString("marque");
 				String modele = rs.getString("modele");
 				int annee = Integer.parseInt(rs.getString("annee"));
-				Blob photo = (Blob) rs.getBlob("photo");
+				Blob photo = rs.getBlob("photo");
 				String couleur = rs.getString("couleur");
+				int prix = Integer.parseInt(rs.getString("prix"));
 				int puissance = Integer.parseInt(rs.getString("puissance"));
-				String type = rs.getString("type");
+				String carburant = rs.getString("carburant");
+				String description = rs.getString("description");
 
-				auto = new AutomobileElectricite(categorie, marque, modele, annee, photo, couleur, puissance, type);
+				auto = new AutomobileElectricite(categorie, marque, modele, annee, (InputStream) photo, couleur, prix,
+						puissance, carburant, description);
 				listeAuto.add(auto);
 			}
 		} catch (SQLException e) {

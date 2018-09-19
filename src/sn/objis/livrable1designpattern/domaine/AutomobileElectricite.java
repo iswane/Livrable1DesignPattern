@@ -3,6 +3,7 @@
  */
 package sn.objis.livrable1designpattern.domaine;
 
+import java.io.InputStream;
 import java.sql.Blob;
 
 /**
@@ -18,9 +19,9 @@ public class AutomobileElectricite extends Automobile{
 		// TODO Auto-generated constructor stub
 	}
 
-	public AutomobileElectricite(String categorie, String marque, String modele, int annee, Blob photo,
-			String couleur, int puissance, String type) {
-		super(categorie, marque, modele, annee, photo, couleur, puissance, type);
+	public AutomobileElectricite(String categorie, String marque, String modele, int annee, InputStream photo,
+			String couleur, int prix, int puissance, String carburant, String description) {
+		super(categorie, marque, modele, annee, photo, couleur, prix, puissance, carburant, description);
 	}
 
 	@Override
